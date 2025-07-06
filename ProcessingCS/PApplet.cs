@@ -227,6 +227,16 @@ public abstract class PApplet
     #endregion Mouse
     
     #endregion Input
+
+    #region Constants
+
+    protected const double QuarterPi = Math.PI * 0.25d;
+    protected const double HalfPi = Math.PI * 0.5d;
+    protected const double Pi = Math.PI;
+    protected const double TwoPi = Math.PI * 2d;
+    protected const double Tau = Math.PI * 2d;
+
+    #endregion
     
     protected abstract void Setup();
     protected abstract void Draw();
