@@ -1,4 +1,6 @@
 using System.Numerics;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 
@@ -11,8 +13,8 @@ public abstract class PApplet
     
     protected int MouseX => GetMouseX();
     protected int MouseY => GetMouseY();
-    protected int PMouseX => MouseX-(int)GetMouseDelta().X;
-    protected int PMouseY => MouseY-(int)GetMouseDelta().Y;
+    protected int PMouseX => MouseX - (int)GetMouseDelta().X;
+    protected int PMouseY => MouseY - (int)GetMouseDelta().Y;
     
     private Color FillColor { get; set; }
     private Color StrokeColor { get; set; }
@@ -86,48 +88,7 @@ public abstract class PApplet
     protected void Background(int rgb) => ClearBackground(Color(rgb));
     protected void Background(int r, int g, int b) => ClearBackground(Color(r, g, b));
     
-    protected void Circle(int x, int y, float radius)
-    {
-        if (StrokeWeightValue != 0)
-        {
-            DrawCircle(x, y, radius, StrokeColor);
-        }
-        DrawCircle(x, y, radius-StrokeWeightValue*2, FillColor);
-    }
 
-    protected void Ellipse(int x, int y, int w, int h)
-    {
-        if (StrokeWeightValue != 0)
-        {
-            DrawEllipse(x, y, w, h, StrokeColor);
-        }
-        DrawEllipse(x, y, w-StrokeWeightValue*2, h-StrokeWeightValue*2, FillColor);
-    }
-
-    protected void Rect(int x, int y, int w, int h)
-    {
-        if (StrokeWeightValue != 0)
-        {
-            DrawRectangle(x, y, w, h, StrokeColor);
-        }
-        DrawRectangle(x + StrokeWeightValue, y + StrokeWeightValue, w-StrokeWeightValue*2, h-StrokeWeightValue*2, FillColor);
-    }
-
-    protected void Line(int x1, int y1, int x2, int y2)
-    {
-        if (StrokeWeightValue == 0) return;
-        
-        if (StrokeWeightValue == 1)
-        {
-            DrawLine(x1, y1, x2, y1, StrokeColor);
-        }
-        else
-        {
-            var start = new Vector2(x1, y1);
-            var end = new Vector2(x2, y1);
-            DrawLineEx(start, end, StrokeWeightValue, StrokeColor);
-        }
-    }
 
     protected void PushMatrix() => Rlgl.PushMatrix();
     protected void PopMatrix() => Rlgl.PopMatrix();
@@ -236,17 +197,110 @@ public abstract class PApplet
     protected const double TwoPi = Math.PI * 2d;
     protected const double Tau = Math.PI * 2d;
 
-    #endregion
+    #endregion Constants
+
+    #region Shape
+
+    #region 2d Primitives
+
+    protected void Circle(int x, int y, float radius)
+    {
+        if (StrokeWeightValue != 0)
+        {
+            DrawCircle(x, y, radius, StrokeColor);
+        }
+        DrawCircle(x, y, radius-StrokeWeightValue*2, FillColor);
+    }
+    protected void Ellipse(int x, int y, int w, int h)
+    {
+        if (StrokeWeightValue != 0)
+        {
+            DrawEllipse(x, y, w, h, StrokeColor);
+        }
+        DrawEllipse(x, y, w-StrokeWeightValue*2, h-StrokeWeightValue*2, FillColor);
+    }
+    protected void Line(int x1, int y1, int x2, int y2)
+    {
+        if (StrokeWeightValue == 0) return;
+        
+        var start = new Vector2(x1, y1);
+        var end = new Vector2(x2, y1);
+        DrawLineEx(start, end, StrokeWeightValue, StrokeColor);
+        
+    }
+    protected void Point(int x, int y)
+    {
+        if (StrokeWeightValue == 0) return;
+        DrawPixel(x, y, StrokeColor);
+    }
+    protected void Rect(int x, int y, int w, int h)
+    {
+        if (StrokeWeightValue != 0)
+        {
+            DrawRectangle(x, y, w, h, StrokeColor);
+        }
+        DrawRectangle(x + StrokeWeightValue, y + StrokeWeightValue, w-StrokeWeightValue*2, h-StrokeWeightValue*2, FillColor);
+    }
+    protected void Square(int x, int y, int extent)
+    {
+        Rect(x, y, extent, extent);
+    }
+    protected void Triangle(int x1, int y1, int x2, int y2, int x3, int y3)
+    {
+        var v1 = new Vector2(x1, y1);
+        var v2 = new Vector2(x2, y2);
+        var v3 = new Vector2(x3, y3);
+        DrawTriangle(v1, v2, v3, FillColor);
+    }
+    
+    #endregion 2d Primitives
+
+    #endregion Shape
+
+    #region Math
+
+    #region Calculation
+
+    protected static int Abs(int n) => int.Abs(n);
+    protected static float Abs(float n) => float.Abs(n);
+    protected static int Ceil(float n) => (int)MathF.Ceiling(n);
+    protected static int Constrain(int amt, int low, int high) => int.Clamp(amt, low, high);
+    protected static float Constrain(float amt, float low, float high) => float.Clamp(amt, low, high);
+    protected static float Dist(float x1, float y1, float x2, float y2) => MathF.Sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+    protected static float Exp(float n) => MathF.Exp(n);
+    protected static int Floor(float n) => (int)MathF.Floor(n);
+    protected static float Lerp(float start, float stop, float amt) => start * (1 - amt) + stop * amt;
+    protected static float Log(float n) => MathF.Log(n);
+    protected static float Log10(float n) => MathF.Log10(n);
+    protected static float Mag(float a, float b) => MathF.Sqrt((a * a) + (b * b));
+    protected static float Map(float value, float start1, float stop1, float start2, float stop2) => (value - start1) * (stop2-start2)/(start1-stop1)+start2;
+    protected static float Max(float n, params float[] ns) => ns.Aggregate(n, float.Max);
+    protected static float Min(float n, params float[] ns) => ns.Aggregate(n, float.Min);
+    protected static float Norm(float value, float start, float stop) => (value - start) / (stop - start);
+    protected static float Pow(float n, float e) => MathF.Pow(n, e);
+    protected static int Round(float n) => (int)n + n % 1 >= 0.5f ? 1 : 0;
+    protected static float Sq(float n) => n * n;
+    protected static float Sqrt(float n) => MathF.Sqrt(n);
+    
+    #endregion Calculation
+
+    #region Trigonometry
+
+    protected static float Acos(float value) => MathF.Acos(value);
+    protected static float Asin(float value) => MathF.Asin(value);
+    protected static float Atan2(float x, float y) => MathF.Atan2(x, y);
+    protected static float Atan(float value) => MathF.Atan(value);
+    protected static float Cos(float value) => MathF.Cos(value);
+    protected static float Degrees(float radians) => radians * RAD2DEG;
+    protected static float Radians(float degrees) => degrees * DEG2RAD;
+    protected static float Sin(float value) => MathF.Sin(value);
+    protected static float Tan(float value) => MathF.Tan(value);
+
+    #endregion Trigonometry
+
+    #endregion Math
     
     protected abstract void Setup();
     protected abstract void Draw();
 
-}
-
-public enum Mode
-{
-    Center,
-    Radius,
-    Corner,
-    Corners
 }

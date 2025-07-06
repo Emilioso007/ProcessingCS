@@ -27,6 +27,7 @@ public class App : PApplet
         Stroke(255,0,0);
         StrokeWeight(2);
         Circle(MouseX, MouseY, 10);
+
     }
 
     protected override void KeyPressed(KeyboardKey key)
