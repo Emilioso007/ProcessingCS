@@ -1,7 +1,5 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessingCS", "ProcessingCS\ProcessingCS.csproj", "{476AD812-0108-495F-B751-7085C2E97653}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessingCS", "ProcessingCS\ProcessingCS.csproj", "{998FC39D-E7FA-476C-9480-230E1530027C}"
 EndProject
 Global
@@ -10,10 +8,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{476AD812-0108-495F-B751-7085C2E97653}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{476AD812-0108-495F-B751-7085C2E97653}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{476AD812-0108-495F-B751-7085C2E97653}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{476AD812-0108-495F-B751-7085C2E97653}.Release|Any CPU.Build.0 = Release|Any CPU
 		{998FC39D-E7FA-476C-9480-230E1530027C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{998FC39D-E7FA-476C-9480-230E1530027C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{998FC39D-E7FA-476C-9480-230E1530027C}.Release|Any CPU.ActiveCfg = Release|Any CPU
