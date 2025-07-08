@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <LangVersion>preview</LangVersion>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
     
     <PropertyGroup>
@@ -15,11 +15,13 @@
         <Description>A Raylib_cs facade to mimic Java Processing syntax</Description>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
+        <RepositoryUrl>https://github.com/Emilioso007/ProcessingCS</RepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="LibNoise" Version="0.2.0" />
       <PackageReference Include="Raylib-cs" Version="7.0.1" />
+      <None Include="../README.md" Pack="true" PackagePath="README.md" />
     </ItemGroup>
     
 </Project>
