@@ -1,13 +1,13 @@
 A Raylib_cs facade to mimic Java Processing syntax
 
-How to use:
+Example usage:
 ```csharp
 global using System.Numerics;
 global using ProcessingCS;
 global using static ProcessingCS.PApplet;
 global using Raylib_cs;
 
-namespace ProcessingCSTesting;
+namespace YourNamespace;
 
 public class Program : PApplet
 {
@@ -25,7 +25,11 @@ public class Program : PApplet
 
     protected override void Draw()
     {
-        Background(42);
+        Background(42); // It is recommended to clear the background, otherwise artifacts may appear
+        
+        Fill(255, 0, 0);
+        NoStroke();
+        Circle(MouseX, MouseY, 50);
     }
 
     protected override void KeyPressed(KeyboardKey key)
@@ -45,7 +49,7 @@ public class Program : PApplet
 
     protected override void MouseDragged(MouseButton mouseButton, Vector2 mouseDelta)
     {
-        Console.WriteLine(mouseButton + " was Dragged " + mouseDelta + "!");
+        Console.WriteLine(mouseButton + " was Dragged " + mouseDelta + " !");
     }
 
     protected override void MouseMoved(Vector2 mouseDelta)

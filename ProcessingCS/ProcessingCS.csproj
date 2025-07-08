@@ -9,7 +9,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <PackageId>Emilioso007.NuGet.ProcessingCS</PackageId>
-        <Version>1.0.1</Version>
+        <Version>1.0.3</Version>
         <Author>Emilioso007</Author>
         <Product>ProcessingCS</Product>
         <Description>A Raylib_cs facade to mimic Java Processing syntax</Description>
