@@ -13,11 +13,14 @@
         <Author>Emilioso007</Author>
         <Product>ProcessingCS</Product>
         <Description>A Raylib_cs facade to mimic Java Processing syntax</Description>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="LibNoise" Version="0.2.0" />
       <PackageReference Include="Raylib-cs" Version="7.0.1" />
     </ItemGroup>
+
 
 </Project>
