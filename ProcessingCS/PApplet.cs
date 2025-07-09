@@ -158,6 +158,74 @@ public abstract class PApplet
 
     #endregion Constants
 
+    #region Typography
+
+    private static Font Font { get; set; } = GetFontDefault();
+    private static int FontSize { get; set; } = 24;
+    private static (Mode alignX, Mode alignY) TextAlignment { get; set; } = (Mode.Left, Mode.Top);
+    
+    public static void Text(string str, float x, float y)
+    {
+        int xPos = (int)x;
+        switch (TextAlignment.alignX)
+        {
+            case Mode.Left:
+                xPos -= 0;
+                break;
+            case Mode.Center:
+                xPos -= (int)TextWidth(str)/2;
+                break;
+            case Mode.Right:
+                xPos -= (int)TextWidth(str);
+                break;
+        }
+        int yPos = (int)y;
+        switch (TextAlignment.alignY)
+        {
+            case Mode.Top:
+                yPos -= 0;
+                break;
+            case Mode.Center:
+                yPos -= (int)TextHeight(str)/2;
+                break;
+            case Mode.Bottom:
+                yPos -= (int)TextHeight(str);
+                break;
+        }
+        DrawText(str, xPos, yPos, FontSize, FillColor);
+    }
+    public static void TextSize(float size) => FontSize = (int)size;
+    public static float TextWidth(string str) => MeasureTextEx(Font, str, FontSize, 2).X;
+    public static float TextHeight(string str) => MeasureTextEx(Font, str, FontSize, 2).Y;
+    public static void TextAlign(Mode alignX, Mode alignY)
+    {
+        Mode[] validXModes = [Mode.Left, Mode.Center, Mode.Right];
+        Mode[] validYModes = [Mode.Top, Mode.Center, Mode.Bottom];
+
+        if (!validXModes.Contains(alignX) || !validYModes.Contains(alignY)) throw new ArgumentException("Invalid alignment!");
+        
+        TextAlignment = (alignX, alignY);
+    }    
+    public static void TextAlign(Mode alignX)
+    {
+        Mode[] validXModes = [Mode.Left, Mode.Center, Mode.Right];
+
+        if (!validXModes.Contains(alignX)) throw new ArgumentException("Invalid alignment!");
+        
+        TextAlignment = (alignX, TextAlignment.alignY);
+    }
+
+    public enum Mode
+    {
+        Left,
+        Center,
+        Right,
+        Top,
+        Bottom
+    }
+
+    #endregion Typography
+
     #region Shape
 
     #region 2d Primitives
@@ -189,7 +257,7 @@ public abstract class PApplet
         if (StrokeWeightValue == 0) return;
 
         var start = new Vector2(x1, y1);
-        var end = new Vector2(x2, y1);
+        var end = new Vector2(x2, y2);
         DrawLineEx(start, end, StrokeWeightValue, StrokeColor);
 
     }
